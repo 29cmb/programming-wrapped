@@ -5,7 +5,7 @@ import PluginHeartbeat from './data/PluginHeartbeat';
 import CodeHeartbeat from './data/CodeHeartbeat';
 import { EventContext } from './Types';
 
-export const outputChannel = vscode.window.createOutputChannel("Programming Wrapped");
+export const outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("Programming Wrapped");
 
 export function activate(context: vscode.ExtensionContext) {
 	outputChannel.appendLine("🔥 | Starting Extension");
@@ -30,4 +30,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
 }
 
-export function deactivate() {}
+export function deactivate() {
+	outputChannel.dispose();
+}

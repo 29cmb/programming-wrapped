@@ -4,6 +4,7 @@
   "description": "A statistics extension for the past year of programming in vscode based on Spotify Wrapped",
   "version": "0.0.1",
   "author": "devcmb",
+  "publisher": "devcmb",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -18,15 +19,32 @@
         "command": "programming-wrapped.toggle_heartbeat_view",
         "title": "Programming Wrapped: Toggle Heartbeat View"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "programmingWrapped",
+          "title": "Programming Wrapped",
+          "icon": "resources/sidebar.png"
+        }
+      ]
+    },
+    "views": {
+      "programmingWrapped": [
+        {
+          "type": "webview",
+          "id": "programmingWrapped.sidebarView",
+          "name": "Your wrapped"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@types/vscode": "^1.96.0",
