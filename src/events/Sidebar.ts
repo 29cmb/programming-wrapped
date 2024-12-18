@@ -1,13 +1,14 @@
 import { CancellationToken, ExtensionContext, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window } from "vscode";
 import { EventContext } from "../Types";
 import { outputChannel } from "../extension";
+import { getGoalProgress } from "../data/GoalsData";
 
 class WrappedSidebar implements WebviewViewProvider {
     public static readonly viewType = 'programmingWrapped.sidebarView';
 
     constructor(private readonly context: ExtensionContext) {}
 
-    resolveWebviewView(webviewView: WebviewView, _context: WebviewViewResolveContext, _token: CancellationToken): Thenable<void> | void {
+    resolveWebviewView(webviewView: WebviewView, context: WebviewViewResolveContext, token: CancellationToken): Thenable<void> | void {
         outputChannel.appendLine("📁 | Resolving Sidebar");
         webviewView.webview.options = {
             enableScripts: true,
@@ -15,32 +16,87 @@ class WrappedSidebar implements WebviewViewProvider {
         };
 
         webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
+        this.commandManager(webviewView.webview);
     }
 
     private getHtmlForWebview(webview: Webview): string {
+        // styles
         const styleResetUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'reset.css'));
         const styleVSCodeUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'vscode.css'));
-        const styleMainUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'main.css'));
-        const siebarStyles = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'sidebar.css'));
+        const sidebarStyles = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'sidebar.css'));
 
+        // scripts
+        const scriptUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'sidebar.js'));
         const nonce = getNonce();
+
+        // images
+        const purpleCircleUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'purple_circle.png'));
+        const greenCircleUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'green_circle.png'));
 
         return `<!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; img-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <link href="${styleResetUri}" rel="stylesheet">
                 <link href="${styleVSCodeUri}" rel="stylesheet">
-                <link href="${styleMainUri}" rel="stylesheet">
-                <link href="${siebarStyles}" rel="stylesheet">
+                <link href="${sidebarStyles}" rel="stylesheet">
                 <title>Programming Wrapped</title>
             </head>
             <body>
-                <p>Your Programming Wrapped</p>
+                <div id="goal-container">
+                    <div id="goal-circle">
+                        <img src="${purpleCircleUri}" alt="Goal Circle" id="goal-img" />
+                        <p id="goal">-</p>
+                    </div>
+                    <div id="goal-info">
+                        <p><b>Large projects have large goals!</b></p>
+                        <p id='goal-info-panel1'></p>
+                    </div>
+                </div>
+                <div id="total-time">
+                    <div id="total-time-circle">
+                        <img src="${greenCircleUri}" alt="Total Time" id="total-img"/>
+                        <p id="total-large">-</p>
+                    </div>
+                    <div id="total-time-info">
+                        <p><b>Sometimes you need to look at the bigger picture!</b><p>
+                        <p id="total-time-info-panel2">You sent a total of <code>10000</code> heartbeats, spending a total of <code>10000h</code> programming!</p>
+                    </div>
+                </div>
+                <script nonce="${nonce}" src="${scriptUri}"></script>
             </body>
             </html>`;
+    }
+
+    private commandManager(webview: Webview) {
+        setInterval(() => {
+            webview.postMessage({
+                command: 'getGoalProgress',
+                goalProgress: getGoalProgress(this.context)
+            });
+
+            webview.postMessage({
+                command: "hasGoal",
+                hasGoal: this.context.globalState.get('goal', 0) !== 0
+            })
+
+            webview.postMessage({
+                command: "getGoal",
+                goal: this.context.globalState.get('goal', 0)
+            })
+
+            webview.postMessage({
+                command: "getWorkTime",
+                time: this.context.globalState.get("heartbeats", 0)
+            })
+
+            webview.postMessage({
+                command: "getHeartbeats",
+                heartbeats: this.context.globalState.get("heartbeats", 0)
+            })
+        }, 1000)
     }
 }
 

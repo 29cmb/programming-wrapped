@@ -1,0 +1,44 @@
+#goal-circle {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+#goal-img {
+    position: relative;
+    top: 50px;
+}
+
+#goal {
+    font-weight:800;
+    position: absolute;
+    right: 60px;
+    top: 100px;
+    font-size: 100px;
+}
+
+#goal-info {
+    margin-right: 300px;
+    margin-top: 100px;
+}
+
+#total-time-circle {
+    position: absolute;
+    top: 400px;
+}
+
+#total-time-info {
+    position: absolute;
+    top: 500px;
+    right: 20px;
+    margin-left: 300px;
+    text-align: end;
+}
+
+#total-large {
+    font-weight: 800;
+    position: absolute;
+    left: 80px;
+    top: 70px;
+    font-size: 70px;
+}
