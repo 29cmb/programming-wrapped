@@ -21,6 +21,7 @@ class WrappedSidebar implements WebviewViewProvider {
         const styleResetUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'reset.css'));
         const styleVSCodeUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'vscode.css'));
         const styleMainUri = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'main.css'));
+        const siebarStyles = webview.asWebviewUri(Uri.joinPath(this.context.extensionUri, 'resources', 'sidebar.css'));
 
         const nonce = getNonce();
 
@@ -33,6 +34,7 @@ class WrappedSidebar implements WebviewViewProvider {
                 <link href="${styleResetUri}" rel="stylesheet">
                 <link href="${styleVSCodeUri}" rel="stylesheet">
                 <link href="${styleMainUri}" rel="stylesheet">
+                <link href="${siebarStyles}" rel="stylesheet">
                 <title>Programming Wrapped</title>
             </head>
             <body>
