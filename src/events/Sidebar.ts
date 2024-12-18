@@ -62,7 +62,7 @@ class WrappedSidebar implements WebviewViewProvider {
                     </div>
                     <div id="total-time-info">
                         <p><b>Sometimes you need to look at the bigger picture!</b><p>
-                        <p id="total-time-info-panel2">You sent a total of <code>10000</code> heartbeats, spending a total of <code>10000h</code> programming!</p>
+                        <p id="total-time-info-panel2"></p>
                     </div>
                 </div>
                 <script nonce="${nonce}" src="${scriptUri}"></script>
