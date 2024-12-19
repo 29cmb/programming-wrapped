@@ -39,6 +39,9 @@ window.addEventListener('message', event => {
 
             total.innerHTML = `${heartbeatsToHours(data.heartbeats)}h`;
             details.innerHTML = `You sent a total of <code>${data.heartbeats}</code> heartbeats, spending a total of <code>${heartbeatsToHours(data.heartbeats)}h</code> programming!`;
+        case 'getMostUsedLanguage':
+            const mostUsed = document.getElementById("top-language");
+            mostUsed.innerHTML = data.mostUsed;
     }
 });
 
