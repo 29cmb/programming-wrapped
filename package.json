@@ -4,6 +4,7 @@
   "description": "A statistics extension for the past year of programming in vscode based on Spotify Wrapped",
   "version": "0.0.1",
   "author": "devcmb",
+  "icon": "resources/icon.png",
   "publisher": "devcmb",
   "engines": {
     "vscode": "^1.96.0"
