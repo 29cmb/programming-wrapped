@@ -9,6 +9,10 @@
   "engines": {
     "vscode": "^1.96.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/29cmb/programming-wrapped"
+  },
   "categories": [
     "Other"
   ],
