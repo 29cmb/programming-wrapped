@@ -28,6 +28,10 @@
       {
         "command": "programming-wrapped.set_hearbeats",
         "title": "Programming Wrapped: Set Heartbeats (Debug Password Required)"
+      },
+      {
+        "command": "programming-wrapped.clear_heartbeats",
+        "title": "Programming Wrapped: Clear Heartbeats"
       }
     ],
     "viewsContainers": {

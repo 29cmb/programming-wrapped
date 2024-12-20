@@ -2,7 +2,7 @@ import { CancellationToken, ExtensionContext, Uri, Webview, WebviewView, Webview
 import { EventContext } from "../Types";
 import { outputChannel } from "../extension";
 import { getGoalProgress } from "../data/GoalsData";
-import { getMostUsedLanguage } from "../data/CodeHeartbeat";
+import { getLanguageTime, getMostUsedLanguage } from "../data/CodeHeartbeat";
 
 class WrappedSidebar implements WebviewViewProvider {
     public static readonly viewType = 'programmingWrapped.sidebarView';
@@ -68,6 +68,7 @@ class WrappedSidebar implements WebviewViewProvider {
                 </div>
                 <div id="top-languages">
                     <h2>Your top language was<br><span id="top-language">-</span></h2>
+                    <p>You spent a total of <code><span id="lang-hours">-</span></code> hours programming in this language! I mean, practices makes perfect!</p>
                 </div>
                 <script nonce="${nonce}" src="${scriptUri}"></script>
             </body>
@@ -104,6 +105,11 @@ class WrappedSidebar implements WebviewViewProvider {
             webview.postMessage({
                 command: "getMostUsedLanguage",
                 mostUsed: getMostUsedLanguage(this.context)
+            })
+
+            webview.postMessage({
+                command: "mostUsedLanguageHeartbeats",
+                heartbeats: getLanguageTime(this.context, getMostUsedLanguage(this.context))
             })
         }, 1000)
     }

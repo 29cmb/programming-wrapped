@@ -42,6 +42,9 @@ window.addEventListener('message', event => {
         case 'getMostUsedLanguage':
             const mostUsed = document.getElementById("top-language");
             mostUsed.innerHTML = data.mostUsed;
+        case 'mostUsedLanguageHeartbeats':
+            const langHeartbeats = document.getElementById("lang-hours")
+            langHeartbeats.innerHTML = heartbeatsToHours(data.heartbeats);
     }
 });
 
