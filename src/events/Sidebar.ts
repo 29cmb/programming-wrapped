@@ -69,6 +69,11 @@ class WrappedSidebar implements WebviewViewProvider {
                 <div id="top-languages">
                     <h2>Your top language was<br><span id="top-language">-</span></h2>
                     <p>You spent a total of <code><span id="lang-hours">-</span></code> hours programming in this language! I mean, practices makes perfect!</p>
+                    <div id="lang-list">
+                        <h2>Here's how you spent your time:</h2>
+                        <p>Typescript - <b>1 hour</b></p>
+                        <p>JavaScript - <b>1 hour</b></p>
+                    </div>
                 </div>
                 <script nonce="${nonce}" src="${scriptUri}"></script>
             </body>

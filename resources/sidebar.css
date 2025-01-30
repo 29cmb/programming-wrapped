@@ -60,3 +60,13 @@
     font-weight: 800;
     font-size: 45px;
 }
+
+#lang-list {
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+#lang-list > h2 {
+    font-size: 20px;
+    font-weight: 500;
+}
